@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utulisateurs!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <center><h1>Utulisateurs</h1></center><br><br>
+    {% include "layouts/_flash_message.html.twig" %}
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>nom</th>
+            <th>pernom</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        <td>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.pernom }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% if ('ROLE_ADMIN' in user.roles)%}
+                    <span class="text-primary">administratrateur</span>
+                {% elseif ('ROLE_EDITOR' in user.roles)%}
+                    <span class="text-success">editeur</span>
+                {%else%}
+                    <span class="text-secondary">client</span>
+                {%endif%}</td>
+                <td>
+                    {%if ('ROLE_ADMIN' in user.roles) == false%}
+                        {%if('ROLE_EDITOR'in user.roles)==false%}
+                            <a onclick="return confirm('voulez-vous vraiment affecter le role edit a cet utilisateur')" class="btn btn-outline-primary" href="{{ path('app_user-to-editor', {'id': user.id}) }}">Ajouter Comme editor</a> |
+                            {%else%}
+                            <a onclick="return confirm('voulez-vous vraiment Retirer le role edit a cet utilisateur')" class="btn btn-outline-danger" href="{{ path('app_user-to-remove-editor-role', {'id': user.id}) }}">Retirer le role editor</a> |
+                        {%endif%}
+                        <a onclick="return confirm('voulez-vous vraiment supprimer cet utilisateur?')" class="btn btn-outline-danger" href="{{ path('app_user-to-delete', {'id': user.id}) }}">supprimer</a>
+                    {%endif%}
+                </td>
+            </tr>
+            {% else %}
+            <p>Aucune utulisateur a afficher pour l'instat</p>
+            {% endfor %}
+        </td>
+    </table>
+</div>
+{% endblock %}

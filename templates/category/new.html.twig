@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{%block body %}
+<div class="container">
+    <div class="login-form">
+        <h2>Ajouter une Category</h2></br> </br>
+        {{form_start(form)}}
+            {{ form_widget(form.name,{'attr':{'class':'form form-control','placeholder':"nom"}}) }}</br>
+            <input type="submit" value="Ajouter" class="btn btn-primary">
+        {{form_end(form)}}
+    </div>
+</div>
+{%endblock%}
