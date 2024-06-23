@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+<div class="container"><br>
+    <h1>Cart</h1><br>
+    {% if items|length == 0 %}
+        <h3>Your cart is empty</h3>
+    {% endif %}
+    <table class="table table-bordered">
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.price }} DT</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.product.price * item.quantity }} DT</td>
+            <td>
+                <a href="{{ path('app_cart_remove', {'id': item.product.id}) }}" class="btn btn-outline-danger">supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><h4>Total</h4></td>
+            <td>{{ total }} DT</td>
+            <td>
+                <a href="" class="btn btn-primary">Checkout</a>
+                <a href="{{ path('app_cart_clear') }}" class="btn btn-danger">supprimer panye</a>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

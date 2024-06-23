@@ -1,0 +1,27 @@
+{% include'base.html.twig'%}
+{%block body%}
+    <div class="container">
+        <br><br><br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Qte</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for productRepository in productRepository %}
+                    <tr>
+                        <td>{{ productRepository.id }}</td>
+                        <td>{{ productRepository.qte }}</td>
+                        <td>{{ productRepository.createdAt|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </div>
+{%endblock%}

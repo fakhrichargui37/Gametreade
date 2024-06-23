@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}home{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card mb-12" style="margin-top : 70px">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{asset('uploads/images/'~product.image)}}"  class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h1 class="card-title text-success">{{product.name}}</h1>
+              <p class="card-text">{{product.description}}</p>
+              <h3>{{product.price}} DT</h3>
+              <a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
+              <p class="card-text"><small class="text-body-secondary"></small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2>Derniers produits Ajoutes</h2>
+      <div class="row">
+        {%for product in products%}
+            <div class="col-md-3 mt-4">
+                <div class="card" style="width: 20rem;">
+                    <img style="height:23rem" src="{{asset('uploads/images/'~product.image)}}" style="height:24rem" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <a style="text-Description:none;color: green" href="{{path('app_home_product_show',{'id':product.id})}}"><h5 class="card-title">{{product.name}}</h5></a>
+                    <p class="card-text">{{product.description|slice(0,50)}} ...</p>
+                    <h3>{{product.price}} DT</h3>
+                    <p class="card-text">{% if product.stock > 99 %}
+                        
+                      <span class="badge text-bg-success">En stock</span>
+                  {% elseif product.stock > 9 %}
+                      <span class="badge text-bg-warning">presque en rupture de stock</span>
+                  {% else %}    
+                      <span class="badge text-bg-danger">En rupture de stock</span>
+                  {% endif %}</p>
+                  {%if app.user%}
+                      <a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
+                  {%else%}
+                      <a href="{{ path('app_login') }}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
+                  {%endif%}
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+</div>  
+{% endblock %}

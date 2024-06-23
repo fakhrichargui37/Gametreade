@@ -4,12 +4,12 @@
 
 {% block body %}
 <div class="container">
-    <h1>les jeux</h1>
+    <h1>{{subCategory.name}}</h1>
     <div class="row">
         {%for product in products%}
             <div class="col-md-3 mt-4">
                 <div class="card" style="width: 20rem;">
-                    <img style="height:23rem" src="{{asset('uploads/images/'~product.image)}}" style="height:24rem" class="card-img-top" alt="...">
+                    <img style="height:23rem" src="{{asset('uploads/images/'~product.image)}}" class="card-img-top" alt="...">
                     <div class="card-body">
                     <a style="text-Description:none;color: green" href="{{path('app_home_product_show',{'id':product.id})}}"><h5 class="card-title">{{product.name}}</h5></a>
                     <p class="card-text">{{product.description|slice(0,50)}} ...</p>
@@ -25,13 +25,12 @@
                     {%if app.user%}
                         <a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
                     {%else%}
-                    <a href="{{ path('app_login') }}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
+                        <a href="{{ path('app_login') }}" class="btn btn-outline-success text-decoration-none">Ajouter au panier</a>
                     {%endif%}
                     </div>
                 </div>
             </div>
         {%endfor%}
     </div>
-    {{knp_pagination_render(products,'layouts/pagination.html.twig')}}
 </div>  
 {% endblock %}

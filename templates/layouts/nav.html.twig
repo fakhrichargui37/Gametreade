@@ -1,17 +1,27 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container">
-      <a class="navbar-brand" href="#">Gametreade</a>
+      <a class="nav-link active" aria-current="page" href="{{path('app_home')}}"><img src="{{asset('fakhri.png')}}" alt="logo" style=" max-height: 60px;"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            {%if categories is defined%}
+           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu">
+              {% for category  in categories %}
+                
+                  {% for subCategory  in category.subCategories %}
+                  <li><a class="dropdown-item" style="font-weight:bolder" href="{{path('app_home_product_filter', {'id':subCategory.id})}}">{{category.name}}</a></li>
+                  {% endfor %}
+                <li><hr class="dropdown-divider"></li>
+              {% endfor %}
+            </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
+          {%endif%}
           {% if is_granted("ROLE_ADMIN") %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,20 +30,37 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ path('app_category')}}">Categories</a></li>
               <li><a class="dropdown-item" href="{{ path('app_category/new')}}">Ajouter une Categorie</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_sub_category_index')}}">sous Categorie</a></li>
+              <li><a class="dropdown-item" href="{{ path('app_sub_category_new')}}">Creer une sous Categorie</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{{ path('app_user')}}">Utulisateurs</a></li>
             </ul>
           </li>
-
           {% endif %}
+          {% if is_granted("ROLE_EDITOR") %}
           <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link " aria-current="page" href="{{ path('app_product_index')}}">Ajouter un Produit</a></li>
+          </li>
+          {% endif %}
+        </ul>
+        <form class="d-flex" role="search" style="margin-right:1cm">
+          <input class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Recherche</button>
+        </form>
+        {% if app.user == false%}
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a style="margin-right:-2cm" class="btn btn-outline-primary " href="{{ path('app_login') }}">Se connecté</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        {%endif%}
+        {% if app.user == true%}
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a style="margin-right:-2cm" class="btn btn-outline-primary " href="{{ path('app_logout') }}">Logout</a>
+          </li>
+        </ul>
+        {%endif%}
       </div>
     </div>
   </nav>

@@ -1,9 +1,9 @@
-body {
-}
 .login-form{
     width: 500px;
     padding: 15px;
     margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 .btn-block{
     display: block;
@@ -15,4 +15,8 @@ body {
     justify-content: center;
     width: 100%;
     height: 100vh;
+}
+h1,h2{
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
